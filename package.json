@@ -1,0 +1,41 @@
+{
+  "name": "handler-decorator",
+  "version": "1.0.0",
+  "description": "Sort of like overloading, but more dynamic",
+  "main": "dist/lib/index.js",
+  "types": "dist/lib/index.d.ts",
+  "keywords": [
+    "ES6",
+    "ES2015",
+    "decorators",
+    "dispatcher",
+    "handler",
+    "overload",
+    "overloading"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^6.0.59",
+    "ava": "^0.17.0",
+    "grunt": "^1.0.1",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-ts": "^6.0.0-beta.9",
+    "load-grunt-tasks": "^3.5.2",
+    "typescript": "^2.1.4"
+  },
+  "scripts": {
+    "test": "ava dist/test/**/*.js",
+    "prepublish": "grunt"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stewartml/handler-decorator.git"
+  },
+  "author": "Stewart MacKenzie-Leigh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stewartml/handler-decorator/issues"
+  },
+  "homepage": "https://github.com/stewartml/handler-decorator#readme"
+}
