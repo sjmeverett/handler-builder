@@ -1,19 +1,55 @@
-# @stugotech/handler-decorator
+# handler-builder
 
 Sort of like overloading, but more _dynamic_.
-Allows you to create a single handler function from an instance of a class, marked up to handle different situations.
+Allows you to create a single handler function from a bunch of more special purpose ones.
 TypeScript definitions are built in.
 
 ## Installation
 
-    $ npm install --save handler-decorator
+    $ npm install --save handler-builder
 
 ## Example
 
-A good use of this could be to handle [Redux](http://redux.js.org/) actions.
+A good use of this could be to handle [Redux](http://redux.js.org/) actions.  There are two ways to do it, depending
+on what you like to do.
+
+Option 1 is to use a plain JavaScript object:
 
 ```js
-import HandlerBuilder, { handler, defaultHandler } from 'handler-decorator';
+import HandlerBuilder, { defaultHandlerSymbol } from 'handler-picker';
+
+let reducerBuilder = new HandlerBuilder<string>(
+  // how to decide what a call is for
+  (state, action) => action.type,
+  // what to do in the default case
+  (state, action) => state
+);
+
+// build a function which will call the correct reducer
+let todoReducer = reducerBuilder.build({
+  ADD_TODO(state, action) {
+    return [...state, {id: action.id, text: action.text, completed: action.completed}];
+  },
+
+  REMOVE_TODO(state, action) {
+    return state.filter((todo) => todo.id !== action.id);
+  },
+
+  // this can give an instance specific default
+  // overriding the default passed to the constructor, if supplied
+  [defaultHandlerSymbol](state, action) {
+    return state;
+  }
+});
+
+// todoReducer is a reducer function
+let newState = todoReducer(state, action);
+```
+
+Option 2 is to use the decorators on a class:
+
+```js
+import HandlerBuilder, { handler, defaultHandler } from 'handler-picker';
 
 let reducerBuilder = new HandlerBuilder<string>(
   // how to decide what a call is for
@@ -33,10 +69,19 @@ class TodoReducers {
   removeTodo(state, action) {
     return state.filter((todo) => todo.id !== action.id);
   }
+
+  // this can give an instance specific default
+  // overriding the default passed to the constructor, if supplied
+  @defaultHandler
+  defaultHandler(state, action) {
+    return state;
+  }
 }
 
 // build a function which will call the correct method on TodoReducers
 let todoReducer = reducerBuilder.build(new TodoReducers());
+
+// todoReducer is a reducer function
 let newState = todoReducer(state, action);
 ```
 
@@ -72,3 +117,9 @@ function passed to the constructor, and if the value returned is the same as `ke
 
 Marks the method as handling the case where no other matching handler is found.  This will take precedence over any `defaultValue` passed
 to the constructor.
+
+### Misc
+
+#### `defaultHandlerSymbol`
+
+When using the plain JavaScript object method, store the default handler under this key.

@@ -1,12 +1,10 @@
 {
-  "name": "handler-decorator",
+  "name": "handler-builder",
   "version": "1.0.0",
   "description": "Sort of like overloading, but more dynamic",
   "main": "dist/lib/index.js",
   "types": "dist/lib/index.d.ts",
   "keywords": [
-    "ES6",
-    "ES2015",
     "decorators",
     "dispatcher",
     "handler",
@@ -30,12 +28,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/stewartml/handler-decorator.git"
+    "url": "git+https://github.com/stewartml/handler-builder.git"
   },
   "author": "Stewart MacKenzie-Leigh",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/stewartml/handler-decorator/issues"
+    "url": "https://github.com/stewartml/handler-builder/issues"
   },
-  "homepage": "https://github.com/stewartml/handler-decorator#readme"
+  "homepage": "https://github.com/stewartml/handler-builder#readme"
 }

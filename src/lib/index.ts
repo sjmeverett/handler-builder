@@ -39,14 +39,21 @@ export default class HandlerBuilder<T> {
    * discriminator found using the selector passed to the constructor.
    */
   build(target: Object) {
-    let map = new Map<T, Function>();
+    let map: Map<T, Function>;
     let handlers = target[handlersSymbol] as Handler<T>[];
     let defaultHandler = target[defaultHandlerSymbol] as Function;
     
-    if (!handlers)
-      throw new Error('no routes found on target');
+    if (handlers) {
+      map = new Map<T, Function>();
+      handlers.forEach(({key, handler}) => map.set(key, handler));
 
-    handlers.forEach(({key, handler}) => map.set(key, handler));
+    } else {
+      let entries = Object.keys(target)
+        .filter((k: any) => k !== defaultHandlerSymbol)
+        .map((k) => [k, target[k]]) as [T, Function][];
+
+      map = new Map<T, Function>(entries);
+    }
 
     return (...args: any[]) => {
       let key = this.selector(...args);
