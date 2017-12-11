@@ -1,6 +1,6 @@
 {
   "name": "handler-builder",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Sort of like overloading, but more dynamic",
   "main": "dist/lib/index.js",
   "types": "dist/lib/index.d.ts",
